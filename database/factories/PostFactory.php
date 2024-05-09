@@ -25,7 +25,9 @@ class PostFactory extends Factory
                 'slug' => Str::slug($name, '-'),
                 'extracto' => $this->faker->text(),
                 'descripcion' => $this->faker->paragraph(),
-                'imagen' => 'imagen/'. $this->faker->image('public/storage/imagen', 400, 300, null, false)
+                'imagen' =>  $this->faker->imageUrl(360, 360, 'animals', true, 'cats')
+                // 'imagen' =>  'imagen/'.$this->faker->image('public/storage/imagen',360, 360, null, true)
+                // 'imagen' => 'imagen/'. $this->faker->image('public/storage/imagen', 400, 300, null, false)
             ];
         }
 }

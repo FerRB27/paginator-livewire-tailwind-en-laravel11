@@ -11,14 +11,19 @@
             @foreach($post as $onepost)
                 <article class="bg-gray-200 m-10 p-4">
                     <div>
+                        {{-- Para Url en la web
+                        {{$onepost->imagen}} --}}
+                        {{-- para Local Storage
+                        {{Storage::url($onepost->imagen)}} --}}
                         <img src="{{$onepost->imagen}}" alt="">
                     </div>
                     <div>
                         <h2 class="text-center text-2xl text-gray-500 my-2">{{$onepost->titulo}}</h2>
                         <p>{{$onepost->fecha->toFormattedDateString()}}</p>
                         <p class="text-left my-2 text-gray-500">{{$onepost->extracto}}</p>
-
-                            <button class="mx-auto text-center text-gray-700 rounded-3xl p-1 block
+                            <button 
+                            wire:click="single({{$onepost}})"
+                            class="mx-auto text-center text-gray-700 rounded-3xl p-1 block
                             bg-gray-400 w-32 hover:bg-gray-500 hover:text-white
                             transition duration-150">Saber Mas</button>
                     </div>
@@ -36,9 +41,25 @@
      hover:cursor-not-allowed
     --}}
     @if ($post->hasPages())
-    <div class="pp-2 bg-stone-200">
+    <div class="p-2 bg-stone-200">
         {{ $post->links() }}
     </div>
     @endif
 
+    {{-- MODAL --}}
+    <x-dialog-modal wire:model="open">
+        <x-slot name="title">
+            <div class="mb-2">Post Numero: {{$article->id}}</div>
+            <span class="text-gray-400">Titulo del Post</span>
+            <span class="text-red-400">{{$article->titulo}}</span>
+        </x-slot>
+        <x-slot name="content">
+            Descripcion <div class="text-slate-400">{{$article->descripcion}}</div>
+        </x-slot>
+        <x-slot name="footer">
+            <x-danger-button wire:click="$set('open', false)">
+                Cerrar Ventana
+            </x-danger-button>
+        </x-slot>
+    </x-dialog-modal>
 </div>

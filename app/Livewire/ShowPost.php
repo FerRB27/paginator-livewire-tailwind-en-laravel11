@@ -13,7 +13,17 @@ class ShowPost extends Component
      * al utilizar el paginador
      */
     use WithPagination;
-    public $search; 
+    public $search, $article; 
+
+    public $open = false;
+
+    public function mount(){
+        $this->article = new Post;
+    }
+    public function single(Post $articulo){
+        $this->article = $articulo;
+        $this->open = true;
+    }
 
 
     public function updatingSearch(){
